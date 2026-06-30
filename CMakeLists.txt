@@ -15,6 +15,7 @@ add_executable(Taller1_Estructura
         include/classes/Artista.h
         src/data_structures/ArbolAVL.cpp
         include/data_structures/ArbolAVL.hpp
+        src/classes/Artista.cpp
 )
 target_include_directories(Taller1_Estructura PRIVATE include)
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/data" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")

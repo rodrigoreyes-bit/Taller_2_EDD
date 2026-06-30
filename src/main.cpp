@@ -110,7 +110,7 @@ void ejecutarmenuL(Almacenamiento *alm, Configuracion *c, ListaReproduccion *lr,
         } else if (subOpcion == 'R' && idx != -1) {
             Cancion *elegida = alm->getCancionIndice(idx);
             if (elegida != nullptr) {
-                lr->reproducirAltiro(elegida, c);
+                lr->reproducirAltiro(elegida, c, alm);
 
                 cancionAct = elegida->getNombre();
                 artistaAct = elegida->getArtista();
@@ -186,6 +186,8 @@ int main() {
 
     Almacenamiento *listaAlmacenamiento = new Almacenamiento();
     lecturaCanciones(listaAlmacenamiento);
+    listaAlmacenamiento->cargarReproducciones();
+
 
     string entradaMenu;
     bool salir = false;
@@ -221,7 +223,7 @@ int main() {
                 break;
 
             case 'Q':
-                lista->pistaAnterior(config1);
+                lista->pistaAnterior(config1, listaAlmacenamiento);
                 break;
 
             case 'E':
@@ -260,7 +262,8 @@ int main() {
                     else if (toupper(subInput[0]) == 'S' && subInput.length() > 1) {
                         try {
                             int num = stoi(subInput.substr(1));
-                            lista->saltarACancion(num, config1);
+                            lista->saltarACancion(num, config1, listaAlmacenamiento);
+
                             volverA = true;
                         } catch (...) {
                             cout << "Formato inválido (Ejemplo: S2)" << endl;
