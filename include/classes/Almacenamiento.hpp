@@ -20,6 +20,7 @@ public:
     void mostrarListaCanciones();
     bool existeID(int id);
     void guardarEnArchivo();
+    void crearArtista(string artista); //crear artista y además crear una lista enlazada de artistas
 };
 
 
