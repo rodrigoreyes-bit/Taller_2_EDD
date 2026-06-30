@@ -8,6 +8,12 @@ Almacenamiento::Almacenamiento() {
 
 //CREAR LISTA DE ARTISTAS
 
+void Almacenamiento::crearArtista(string artista) {
+
+
+
+}
+
 void Almacenamiento::crearCanción(int id, string nombre, string artista, string album, int ano, int duracion, string ubicacion) {
     Cancion* nuevaCancion = new Cancion(id, nombre, artista, album, ano, duracion, ubicacion);
     Nodo* nuevoNodo = new Nodo(nuevaCancion);

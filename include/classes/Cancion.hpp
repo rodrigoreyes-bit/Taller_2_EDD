@@ -13,11 +13,10 @@ private:
     int anio;
     int duracion;
     string ubicacion;
-    //agregar contador de cuantas veces se reprodujo esta cancion (para el top 10 canciones más escuchadas)
+    int contadorReproducciones; //contador de cuantas veces se reprodujo esta cancion (para el top 10 canciones más escuchadas)
 
 public:
-    Cancion(int id, string nombre, string artista, string album,
-            int anio, int duracion, string ubicacion);
+    Cancion(int id, string nombre, string artista, string album, int anio, int duracion, string ubicacion);
 
     int getId() const;
     string getNombre() const;
