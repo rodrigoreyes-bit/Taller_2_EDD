@@ -8,6 +8,8 @@ Cancion::Cancion(int id, string nombre, string artista, string album, int anio, 
     this->anio = anio;
     this->duracion = duracion;
     this->ubicacion = ubicacion;
+    this->contadorReproducciones = 0;
+    this->siguienteCancionArtista = nullptr;
 }
 
 int Cancion::getId() const {
@@ -51,4 +53,19 @@ void Cancion::setDuracion(int duracion) {
 }
 void Cancion::setUbicacion(string ubicacion) {
     this->ubicacion = ubicacion;
+}
+int Cancion::getReproducciones() const {
+    return contadorReproducciones;
+}
+Cancion* Cancion::getSiguienteCancionArtista() const {
+    return siguienteCancionArtista;
+}
+void Cancion::setReproducciones(int cantidad) {
+    contadorReproducciones = cantidad;
+}
+void Cancion::incrementarReproduccion() {
+    contadorReproducciones++;
+}
+void Cancion::setSiguienteCancionArtista(Cancion* siguiente) {
+    siguienteCancionArtista = siguiente;
 }
