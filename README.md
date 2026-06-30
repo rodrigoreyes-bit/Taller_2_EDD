@@ -8,12 +8,16 @@
 ## Descripción del Proyecto
 Snoopify es un reproductor de música basado en consola desarrollado en C++ para el curso de Estructuras de Datos. El sistema permite gestionar un catálogo de música desde un archivo fuente y controlar una lista de reproducción dinámica. Utiliza estructuras de datos personalizadas, como listas doblemente enlazadas, para ofrecer una navegación fluida entre canciones, permitiendo reproducir, pausar y gestionar colas de reproducción de forma eficiente.
 
+## Taller 4 consideraciones
+Como este taller es la continuación del anterior, al hacer una copia del repo anterior se copiaron los commits también, por lo que la realización de este taller es desde el commit 97 en adelante.
+
 ## Diagrama de Clases
 * **Cancion:** Almacena los metadatos (ID, nombre, artista, duración, etc.).
 * **Nodo:** Clase base para la estructura de lista enlazada.
 * **Almacenamiento:** Gestiona el catálogo completo de canciones disponibles en el sistema.
 * **ListaReproduccion:** Controla la cola actual, el puntero a la canción en reproducción y los estados.
 * **Configuracion:** Gestiona el archivo status.cfg en el proyecto.
+* **ACTUALIZAAAAAAAAAAAAAAAAAR**
   
 ## Compilación y ejecución
 * Para compilar este proyecto, se requiere un compilador de C++ (GCC/G++) instalado en su sistema.
