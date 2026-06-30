@@ -16,7 +16,7 @@ private:
 public:
     Artista(string nombre);
     //hacer un string de canciones del artista separado por comas (despues se leerá con splits y se comparará con la l,ista enlazada de canciones)
-    string getNombre;
-    int getContador;
+    string getNombre();
+    int getContador();
 
 #endif //TALLER1_ESTRUCTURA_ARTISTA_H

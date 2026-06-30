@@ -13,6 +13,7 @@ private:
     int anio;
     int duracion;
     string ubicacion;
+    Cancion* siguienteCancionArtista;
     int contadorReproducciones; //contador de cuantas veces se reprodujo esta cancion (para el top 10 canciones más escuchadas)
 
 public:
@@ -32,6 +33,11 @@ public:
     void setAnio(int anio);
     void setDuracion(int duracion);
     void setUbicacion(string ubicacion);
+    int getReproducciones() const;
+    Cancion* getSiguienteCancionArtista() const;
+    void setReproducciones(int cantidad);
+    void incrementarReproduccion();
+    void setSiguienteCancionArtista(Cancion* siguiente);
 };
 
 #endif //TALLER1_ESTRUCTURA_CANCION_HPP
