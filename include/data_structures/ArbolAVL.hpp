@@ -11,24 +11,23 @@ public:
     Cancion* cancion;
     NodoAVL* izq;
     NodoAVL* der;
+    int altura;
 
     NodoAVL(Cancion* cancion) {
         this->cancion = cancion;
         this->izq = nullptr;
         this->der = nullptr;
-
+        this->altura = 1;
     }
 
-
 };
-
-
-
 
 
 class ArbolAVL {
 private:
     NodoAVL* raiz;
+    int obtenerAltura(NodoAVL* nodo);
+    int obtenerBalance(NodoAVL* nodo);
 
 
 
