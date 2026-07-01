@@ -6,6 +6,22 @@
 
 #include <iostream>
 
+ArbolAVL::ArbolAVL() {
+    this->raiz = nullptr;
+}
+
+ArbolAVL::~ArbolAVL() {
+    destruirArbol(this->raiz);
+}
+
+void ArbolAVL::destruirArbol(NodoAVL *nodo) {
+    if (nodo != nullptr) {
+        destruirArbol(nodo->izq);
+        destruirArbol(nodo->der);
+    }
+    delete nodo;
+}
+
 int ArbolAVL::obtenerAltura(NodoAVL *nodo) {
     if (nodo == nullptr) {
         return 0;

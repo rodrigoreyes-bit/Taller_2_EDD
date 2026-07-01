@@ -35,7 +35,7 @@ private:
     NodoAVL* insertarRec(NodoAVL* nodo, Cancion* cancion);
     void InOrden(NodoAVL* nodo, int& cont);
 
-    //void destruirArbol(NodoAVL* nodo);
+    void destruirArbol(NodoAVL* nodo);
 
 
 public:
