@@ -5,6 +5,8 @@
 #include "../include/classes/Almacenamiento.hpp"
 #include "../include/data_structures/ListaReproduccion.hpp"
 #include "../include/classes/Configuracion.hpp"
+#include "../include/data_structures/MaxHeapCancion.h"
+
 using namespace std;
 
 void lecturaCanciones(Almacenamiento *a) {
@@ -52,6 +54,8 @@ void menuOpciones(Configuracion *cfg, string cancion, string artista, string alb
     cout << "  R - Repeticion (Desactivado (0) /Repetir una (1) /Repetir todas (2))" << endl;
     cout << "  A - Ver lista de reproduccion actual" << endl;
     cout << "  L - Listado de canciones" << endl;
+    cout << "  F - Buscar canciones" << endl;
+    cout << "  T - TOP 10 Artistas y Canciones" << endl;
     cout << "  X - Salir" << endl;
     cout << "Ingrese Opcion: ";
 }
@@ -178,6 +182,7 @@ void ejecutarmenuL(Almacenamiento *alm, Configuracion *c, ListaReproduccion *lr,
 }
 
 
+
 int main() {
     Configuracion *config1 = new Configuracion();
     config1->cargarArchivoConfig();
@@ -187,7 +192,6 @@ int main() {
     Almacenamiento *listaAlmacenamiento = new Almacenamiento();
     lecturaCanciones(listaAlmacenamiento);
     listaAlmacenamiento->cargarReproducciones();
-
 
     string entradaMenu;
     bool salir = false;
@@ -238,7 +242,7 @@ int main() {
                     lista->mezclarCola();
                 }
             }
-            break;
+                break;
             case 'R': {
                 cout << "Ingrese Opción (0, 1 o 2): ";
                 int eleccion;
@@ -246,7 +250,7 @@ int main() {
                 config1->setRepeticion(eleccion);
                 lista->repetirCanciones(eleccion, config1, listaAlmacenamiento, lista);
             }
-            break;
+                break;
             case 'A': {
                 string subInput;
                 bool volverA = false;
@@ -279,6 +283,135 @@ int main() {
             case 'X':
                 salir = true;
                 break;
+
+            case 'F':
+                //
+                break;
+
+            case 'T':
+                {
+                bool volverTop = false;
+                while (!volverTop) {
+                    cout << "Ranking TOP" << endl;
+                    cout << "C - Top 10 canciones más escuchadas" << endl;
+                    cout << "A - Top 10 artistas más escuchados" << endl;
+                    cout << "X - Salir" << endl;
+                    cout << "Ingrese Opción: ";
+                    string entradita;
+                    cin >> entradita;
+                    char cTop = toupper(entradita[0]);
+
+                    if (cTop == 'X') {
+                        volverTop = true;
+                    }
+                    else if (cTop == 'C') {
+                        bool volverCanciones = false;
+                        while (!volverCanciones) {
+                            clearScreen();
+                            cout << "Ranking TOP 10 Canciones más escuchadas:" << endl;
+
+                            //1) contar cuántas canciones existen en total en el almacenamiento
+                            int totalCanciones = 0;
+                            Nodo* cursorContar = listaAlmacenamiento->getPrimerNodo();
+                            while (cursorContar != nullptr) {
+                                totalCanciones++;
+                                cursorContar = cursorContar->siguiente;
+                            }
+
+                            if (totalCanciones == 0) {
+                                cout << "No hay canciones registradas en la biblioteca." << endl;
+                            } else {
+                                // 2) instanciar el maxheap con la capacidad total calculada
+                                MaxHeapCancion* heapCanciones = new MaxHeapCancion(totalCanciones);
+
+                                // 3) insertar todas las canciones de la biblioteca en el Heap
+                                Nodo* cursorLlenar = listaAlmacenamiento->getPrimerNodo();
+                                while (cursorLlenar != nullptr) {
+                                    heapCanciones->insertar(cursorLlenar->dato, cursorLlenar->dato->getReproducciones());
+                                    cursorLlenar = cursorLlenar->siguiente;
+                                }
+
+                                // 4) det cuantas mostrar (N = un máximo de 10)
+                                int canttt;
+                                if (totalCanciones < 10) {
+                                    canttt = totalCanciones;
+                                } else {
+                                    canttt = 10;
+                                }
+
+                                // Arreglo dinámico auxiliar para guardar las top canciones en orden y permitir R<num> o A<num>
+                                Cancion** topArray = new Cancion*[canttt];
+
+                                // 5) extraer ordenadamente del heap y mostrar en pantalla
+                                for (int i = 0; i < canttt; i++) {
+                                    int reps = 0;
+                                    Cancion* topC = heapCanciones->extraerMaximo(reps);
+                                    topArray[i] = topC;
+
+                                    cout << (i + 1) << ". [" << reps << "] "
+                                         << topC->getNombre() << " - " << topC->getArtista() << endl;
+                                }
+
+                                cout << "\nOpciones:" << endl;
+                                cout << "  R<num> - Reproducir canción seleccionada (ej: R1)" << endl;
+                                cout << "  A<num> - Agregar canción seleccionada al final de la lista" << endl;
+                                cout << "  A      - Top 10 artistas más escuchados" << endl;
+                                cout << "  V      - Volver al menú principal" << endl;
+                                cout << "Ingrese Opción: ";
+
+                                string subOp;
+                                cin >> subOp;
+                                char accion = toupper(subOp[0]);
+
+                                int indice = -1;
+                                if (subOp.length() > 1) {
+                                    try {
+                                        indice = stoi(subOp.substr(1));
+                                    } catch (...) { indice = -1; }
+                                }
+
+                                if (accion == 'V') {
+                                    volverCanciones = true;
+                                    volverTop = true; // Regresa al menú principal del reproductor
+                                }
+                                else if (accion == 'A' && indice == -1) {
+                                    // Cambiar directamente al Top 10 de artistas (rompe este ciclo para ir al menú TOP)
+                                    volverCanciones = true;
+                                }
+                                else if (accion == 'R' && indice >= 1 && indice <= canttt) {
+                                    Cancion* elegida = topArray[indice - 1];
+                                    lista->reproducirAltiro(elegida, config1, listaAlmacenamiento);
+
+                                    cancionActual = elegida->getNombre();
+                                    artistaActual = elegida->getArtista();
+                                    albumActual = elegida->getAlbum();
+                                    anioActual = elegida->getAnio();
+
+                                    cout << "Reproduciendo ahora: " << cancionActual << endl;
+                                    volverCanciones = true;
+                                    volverTop = true;
+                                }
+                                else if (accion == 'A' && indice >= 1 && indice <= canttt) {
+                                    Cancion* elegida = topArray[indice - 1];
+                                    lista->agregarAlFinal(elegida);
+                                    cout << "Cancion agregada: " << elegida->getNombre() << endl;
+                                } else {
+                                    cout << "Opción inválida." << endl;
+                                }
+
+                                // limpieza de memoria dinamica local
+                                delete[] topArray;
+                                delete heapCanciones;
+                            }
+                        }
+                    }
+                    else if (cTop == 'A') {
+                        //HACER OTRO COSO
+                    }
+                }
+                break;
+            }
+
             default:
                 cout << "Opcion no valida. Intente de nuevo." << endl;
                 break;
