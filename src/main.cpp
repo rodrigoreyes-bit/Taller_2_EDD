@@ -6,6 +6,7 @@
 #include "../include/data_structures/ListaReproduccion.hpp"
 #include "../include/classes/Configuracion.hpp"
 #include "../include/data_structures/MaxHeapCancion.h"
+#include "data_structures/MaxHeapArtistas.hpp"
 
 using namespace std;
 
@@ -521,71 +522,71 @@ int main() {
                     else if (cTop == 'A') {
                         int totalArtistas = 0;
                         Artista* artistaActual = listaAlmacenamiento->getPrimerArtista();
+
                         while (artistaActual != nullptr) {
                             totalArtistas++;
                             artistaActual = artistaActual->getSiguienteArtista();
                         }
 
                         if (totalArtistas == 0) {
-                            std::cout << "No hay artistas registrados en el sistema.\n";
+                            cout << "No hay artistas registrados en el sistema.\n";
                         } else {
-                            Artista** arregloHeap = new Artista*[totalArtistas];
+                            MaxHeapArtistas heapArtistas(totalArtistas);
+
                             artistaActual = listaAlmacenamiento->getPrimerArtista();
-                            for (int i = 0; i < totalArtistas; i++) {
-                                arregloHeap[i] = artistaActual;
+                            while (artistaActual != nullptr) {
+                                heapArtistas.insertar(artistaActual, artistaActual->getContador());
                                 artistaActual = artistaActual->getSiguienteArtista();
                             }
 
-                            for (int i = (totalArtistas / 2) - 1; i >= 0; i--) {
-                                int k = i;
-                                while (2 * k + 1 < totalArtistas) {
-                                    int j = 2 * k + 1;
+                            cout << "   RANKING TOP 10 ARTISTAS MAS ESCUCHADOS\n";
 
-                                    if (j + 1 < totalArtistas && arregloHeap[j+1]->getContador() > arregloHeap[j]->getContador()) {
-                                        j++;
-                                    }
-                                    if (arregloHeap[k]->getContador() >= arregloHeap[j]->getContador()) {
-                                        break;
-                                    }
+                            int limite = (heapArtistas.getTamano() < 10) ? heapArtistas.getTamano() : 10;
 
-                                    Artista* temp = arregloHeap[k];
-                                    arregloHeap[k] = arregloHeap[j];
-                                    arregloHeap[j] = temp;
-                                    k = j;
+                            Artista** topMostrados = new Artista*[limite];
+
+                            for (int i = 1; i <= limite; i++) {
+                                int reprosSalida = 0;
+                                Artista* topArtista = heapArtistas.extraerMaximo(reprosSalida);
+
+                                if (topArtista != nullptr) {
+                                    cout << "  " << i << ". [" << reprosSalida << " reprod.] " << topArtista->getNombre() << "\n";
+                                    topMostrados[i - 1] = topArtista; // Guardamos la referencia
+                                }
+                            }
+                            cout << "=========================================\n\n";
+
+                            cout << "¿Deseas seleccionar un artista para ver sus canciones alfabéticamente? (S/N): ";
+                            char respuesta;
+                            cin >> respuesta;
+
+                            if (respuesta == 'S' || respuesta == 's') {
+                                cout << "Ingresa el número del artista (1 al " << limite << "): ";
+                                int num;
+                                cin >> num;
+
+                                if (num >= 1 && num <= limite) {
+                                    Artista* seleccionado = topMostrados[num - 1];
+                                    cout << "\n-----------------------------------------\n";
+                                    cout << " Canciones de: " << seleccionado->getNombre() << " (Orden A-Z):\n";
+                                    cout << "-----------------------------------------\n";
+
+                                    // LLAMADA AL INORDEN DEL AVL PRIVADO DEL ARTISTA
+                                    seleccionado->getCancionesAVL()->mostrarEnOrden();
+
+                                    cout << "-----------------------------------------\n\n";
+                                } else {
+                                    cout << "Número inválido.\n\n";
                                 }
                             }
 
-                            std::cout << " Ranking Top 10 Artistas más escuchados" << endl;
-
-                            int limite = (totalArtistas < 10) ? totalArtistas : 10;
-                            int tamanoActual = totalArtistas;
-
-                            for (int i = 1; i <= limite; i++) {
-                                std::cout << "  " << i << ". [" << arregloHeap[0]->getContador()
-                                          << " reprod.] " << arregloHeap[0]->getNombre() << endl;
-
-                                arregloHeap[0] = arregloHeap[tamanoActual - 1];
-                                tamanoActual--;
-
-                                int k = 0;
-                                while (2 * k + 1 < tamanoActual) {
-                                    int j = 2 * k + 1;
-                                    if (j + 1 < tamanoActual && arregloHeap[j+1]->getContador() > arregloHeap[j]->getContador()) {
-                                        j++;
-                                    }
-                                    if (arregloHeap[k]->getContador() >= arregloHeap[j]->getContador()) {
-                                        break;
-                                    }
-
-                                    Artista* temp = arregloHeap[k];
-                                    arregloHeap[k] = arregloHeap[j];
-                                    arregloHeap[j] = temp;
-                                    k = j;
-                                }
+                            delete[] topMostrados;
+                        }
+                    }//fjfjf
 
 
 
-                        }//else
+
                     }
                 }
                 break;

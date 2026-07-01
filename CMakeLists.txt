@@ -18,6 +18,8 @@ add_executable(Taller1_Estructura
         src/classes/Artista.cpp
         include/data_structures/MaxHeapCancion.h
         src/data_structures/MaxHeapCancion.cpp
+        src/data_structures/MaxHeapArtistas.cpp
+        include/data_structures/MaxHeapArtistas.hpp
 )
 target_include_directories(Taller1_Estructura PRIVATE include)
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/data" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
