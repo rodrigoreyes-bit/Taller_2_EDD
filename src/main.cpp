@@ -519,7 +519,73 @@ int main() {
                         }
                     }
                     else if (cTop == 'A') {
-                        //HACER OTRO COSO
+                        int totalArtistas = 0;
+                        Artista* artistaActual = listaAlmacenamiento->getPrimerArtista();
+                        while (artistaActual != nullptr) {
+                            totalArtistas++;
+                            artistaActual = artistaActual->getSiguienteArtista();
+                        }
+
+                        if (totalArtistas == 0) {
+                            std::cout << "No hay artistas registrados en el sistema.\n";
+                        } else {
+                            Artista** arregloHeap = new Artista*[totalArtistas];
+                            artistaActual = listaAlmacenamiento->getPrimerArtista();
+                            for (int i = 0; i < totalArtistas; i++) {
+                                arregloHeap[i] = artistaActual;
+                                artistaActual = artistaActual->getSiguienteArtista();
+                            }
+
+                            for (int i = (totalArtistas / 2) - 1; i >= 0; i--) {
+                                int k = i;
+                                while (2 * k + 1 < totalArtistas) {
+                                    int j = 2 * k + 1;
+
+                                    if (j + 1 < totalArtistas && arregloHeap[j+1]->getContador() > arregloHeap[j]->getContador()) {
+                                        j++;
+                                    }
+                                    if (arregloHeap[k]->getContador() >= arregloHeap[j]->getContador()) {
+                                        break;
+                                    }
+
+                                    Artista* temp = arregloHeap[k];
+                                    arregloHeap[k] = arregloHeap[j];
+                                    arregloHeap[j] = temp;
+                                    k = j;
+                                }
+                            }
+
+                            std::cout << " Ranking Top 10 Artistas más escuchados" << endl;
+
+                            int limite = (totalArtistas < 10) ? totalArtistas : 10;
+                            int tamanoActual = totalArtistas;
+
+                            for (int i = 1; i <= limite; i++) {
+                                std::cout << "  " << i << ". [" << arregloHeap[0]->getContador()
+                                          << " reprod.] " << arregloHeap[0]->getNombre() << endl;
+
+                                arregloHeap[0] = arregloHeap[tamanoActual - 1];
+                                tamanoActual--;
+
+                                int k = 0;
+                                while (2 * k + 1 < tamanoActual) {
+                                    int j = 2 * k + 1;
+                                    if (j + 1 < tamanoActual && arregloHeap[j+1]->getContador() > arregloHeap[j]->getContador()) {
+                                        j++;
+                                    }
+                                    if (arregloHeap[k]->getContador() >= arregloHeap[j]->getContador()) {
+                                        break;
+                                    }
+
+                                    Artista* temp = arregloHeap[k];
+                                    arregloHeap[k] = arregloHeap[j];
+                                    arregloHeap[j] = temp;
+                                    k = j;
+                                }
+
+
+
+                        }//else
                     }
                 }
                 break;
