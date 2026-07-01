@@ -36,7 +36,7 @@ private:
     void InOrden(NodoAVL* nodo, int& cont);
 
     //void destruirArbol(NodoAVL* nodo);
-//holi
+
 
 public:
     ArbolAVL();
