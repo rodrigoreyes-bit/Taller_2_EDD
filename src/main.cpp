@@ -180,7 +180,120 @@ void ejecutarmenuL(Almacenamiento *alm, Configuracion *c, ListaReproduccion *lr,
         }
     }
 }
+void ejecutarmenuF(Almacenamiento* alm, Configuracion* c, ListaReproduccion* lr) {
+    bool volverPrincipal = false;
 
+    while (!volverPrincipal) {
+        clearScreen();
+        cout << "Busqueda de canciones" << endl << endl;
+        cout << "Buscar canciones que contengan: ";
+        cin.ignore();
+        string texto;
+        getline(cin, texto);
+
+        if (texto.empty()) {
+            return;
+        }
+
+        string textoLower = texto;
+        for (char &ch : textoLower) ch = tolower(ch);
+
+        int total = 0;
+        Nodo* cursor = alm->getPrimerNodo();
+        while (cursor != nullptr) {
+            string nombreLower = cursor->dato->getNombre();
+            string artistaLower = cursor->dato->getArtista();
+            for (char &ch : nombreLower) ch = tolower(ch);
+            for (char &ch : artistaLower) ch = tolower(ch);
+
+            if (nombreLower.find(textoLower) != string::npos ||
+                artistaLower.find(textoLower) != string::npos) {
+                total++;
+            }
+            cursor = cursor->siguiente;
+        }
+
+        if (total == 0) {
+            cout << endl << "No se encontraron canciones ni artistas que coincidan con \""
+                 << texto << "\"." << endl;
+            cout << "Presione Enter para intentar con otro texto...";
+            cin.get();
+            continue;
+        }
+
+        Cancion** resultados = new Cancion*[total];
+        int idx = 0;
+        cursor = alm->getPrimerNodo();
+        while (cursor != nullptr) {
+            string nombreLower = cursor->dato->getNombre();
+            string artistaLower = cursor->dato->getArtista();
+            for (char &ch : nombreLower) ch = tolower(ch);
+            for (char &ch : artistaLower) ch = tolower(ch);
+
+            if (nombreLower.find(textoLower) != string::npos ||
+                artistaLower.find(textoLower) != string::npos) {
+                resultados[idx++] = cursor->dato;
+            }
+            cursor = cursor->siguiente;
+        }
+
+        bool repetirBusqueda = false;
+        while (!repetirBusqueda && !volverPrincipal) {
+            clearScreen();
+            cout << "Busqueda de canciones" << endl << endl;
+            cout << "Canciones que contienen \"" << texto << "\":" << endl;
+            for (int i = 0; i < total; i++) {
+                cout << " " << (i + 1) << ". " << resultados[i]->getNombre()
+                     << " - " << resultados[i]->getArtista() << endl;
+            }
+            cout << endl << "Opciones:" << endl;
+            cout << "R<num> - Reproducir cancion seleccionada" << endl;
+            cout << "A<num> - Agregar cancion seleccionada al final de la lista de reproduccion actual" << endl;
+            cout << "F - Repetir busqueda con un texto diferente" << endl;
+            cout << "V - Volver al menu principal" << endl;
+            cout << "Ingrese Opcion: ";
+
+            string subInput;
+            cin >> subInput;
+            char subOp = toupper(subInput[0]);
+            int num = -1;
+
+            if (subInput.length() > 1) {
+                try {
+                    num = stoi(subInput.substr(1));
+                } catch (...) {
+                    cout << "Formato no valido (ej: R1, A2)." << endl;
+                    continue;
+                }
+            }
+
+            if (subOp == 'V') {
+                volverPrincipal = true;
+            } else if (subOp == 'F') {
+                repetirBusqueda = true;
+            } else if (subOp == 'R' && num >= 1 && num <= total) {
+                Cancion* elegida = resultados[num - 1];
+                lr->reproducirCancionMezclar(elegida, c, alm);
+                cout << "Reproduciendo ahora: " << elegida->getNombre() << endl;
+                cout << "Presione Enter para continuar...";
+                cin.ignore();
+                cin.get();
+            } else if (subOp == 'A' && num >= 1 && num <= total) {
+                Cancion* elegida = resultados[num - 1];
+                lr->agregarAlFinal(elegida);
+                cout << "Cancion agregada a la lista de reproduccion actual: "
+                     << elegida->getNombre() << endl;
+                cout << "Presione Enter para continuar...";
+                cin.ignore();
+                cin.get();
+            } else {
+                cout << "Opcion no valida o indice fuera de rango." << endl;
+            }
+        }
+
+        delete[] resultados;
+    }
+}
 
 
 int main() {
@@ -285,7 +398,7 @@ int main() {
                 break;
 
             case 'F':
-                //
+                ejecutarmenuF(listaAlmacenamiento, config1, lista);
                 break;
 
             case 'T':
