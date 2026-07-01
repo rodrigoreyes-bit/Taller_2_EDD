@@ -27,10 +27,23 @@ private:
     NodoAVL* raiz;
     int obtenerAltura(NodoAVL* nodo);
     int obtenerBalance(NodoAVL* nodo);
+    int maximo(int a, int b);
+
+    NodoAVL* rotacionSimpleDerecha(NodoAVL* y);
+    NodoAVL* rotacionSimpleIzquierda(NodoAVL* x);
+
+    NodoAVL* insertarRec(NodoAVL* nodo, Cancion* cancion);
+    void InOrden(NodoAVL* nodo, int& cont);
+
+    //void destruirArbol(NodoAVL* nodo);
 
 
+public:
+    ArbolAVL();
+    ~ArbolAVL();
 
-
+    void insertar(Cancion* cancion);
+    void mostrarInOrden();
 };
 
 
