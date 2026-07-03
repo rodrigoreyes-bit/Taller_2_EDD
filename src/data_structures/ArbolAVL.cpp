@@ -10,14 +10,13 @@ ArbolAVL::~ArbolAVL() {
     destruirArbol(this->raiz);
 }
 
-/*void ArbolAVL::destruirArbol(NodoAVL *nodo) {
+void ArbolAVL::destruirArbol(NodoAVL *nodo) {
     if (nodo != nullptr) {
-        destruirArbol(nodo->izq);
-        destruirArbol(nodo->der);
+        destruirArbol(nodo->izquierdo);
+        destruirArbol(nodo->derecho);
     }
     delete nodo;
 }
-*/
 
 int ArbolAVL::obtenerAltura(NodoAVL *nodo) {
     if (nodo == nullptr) {

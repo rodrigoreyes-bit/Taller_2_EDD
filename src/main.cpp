@@ -541,7 +541,6 @@ int main() {
                                 artistaActual = artistaActual->getSiguienteArtista();
                             }
 
-                            
                             cout << "Ranking TOP 10 Artistas más escuchados:\n";
 
                             int limite;
