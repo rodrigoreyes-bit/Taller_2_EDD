@@ -541,6 +541,7 @@ int main() {
                                 artistaActual = artistaActual->getSiguienteArtista();
                             }
 
+                            
                             cout << "Ranking TOP 10 Artistas más escuchados:\n";
 
                             int limite;
@@ -583,7 +584,7 @@ int main() {
                                     volverTop = true;
                                 }
                                 else if (accArtista == 'C') {
-                                    volverArtistas = true; 
+                                    volverArtistas = true;
                                 }
                                 else if (accArtista == 'S' && artistaIndice >= 1 && artistaIndice <= limite) {
                                     Artista* seleccionado = topMostrados[artistaIndice - 1];
