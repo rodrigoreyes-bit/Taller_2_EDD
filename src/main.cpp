@@ -422,7 +422,7 @@ int main() {
                         bool volverCanciones = false;
                         while (!volverCanciones) {
                             clearScreen();
-                            cout << "Ranking TOP 10 Canciones más escuchadas:" << endl;
+                            cout << "Ranking TOP 10 Canciones mas escuchadas:" << endl;
 
                             int totalCanciones = 0;
                             Nodo* cursorContar = listaAlmacenamiento->getPrimerNodo();
@@ -461,11 +461,11 @@ int main() {
                                 }
 
                                 cout << "\nOpciones:" << endl;
-                                cout << "  R<num> - Reproducir canción seleccionada (ej: R1)" << endl;
-                                cout << "  A<num> - Agregar canción seleccionada al final de la lista" << endl;
-                                cout << "  A      - Top 10 artistas más escuchados" << endl;
-                                cout << "  V      - Volver al menú principal" << endl;
-                                cout << "Ingrese Opción: ";
+                                cout << "  R<num> - Reproducir cancion seleccionada (ej: R1)" << endl;
+                                cout << "  A<num> - Agregar cancion seleccionada al final de la lista" << endl;
+                                cout << "  A      - Top 10 artistas mas escuchados" << endl;
+                                cout << "  V      - Volver al menu principal" << endl;
+                                cout << "Ingrese Opcion: ";
 
                                 string subOp;
                                 cin >> subOp;
@@ -523,7 +523,6 @@ int main() {
 
                         if (totalArtistas == 0) {
                             cout << "No hay artistas registrados en el sistema.\n";
-                            //cin.ignore(); cin.get(); //no se si poner esto
                             volverArtistas = true;
                         } else {
                             MaxHeapArtistas heapArtistas(totalArtistas);
@@ -651,7 +650,7 @@ int main() {
                                                 cout << "Cancion \"" << elegida->getNombre() << "\" añadida a la cola.\n";
                                                 system("pause");
                                             } else {
-                                                cout << "Indice de canción no valido.\n";
+                                                cout << "Indice de cancion no valido.\n";
                                                 system("pause");
                                             }
                                         }
