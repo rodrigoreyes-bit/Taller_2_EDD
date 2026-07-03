@@ -562,7 +562,12 @@ int main() {
 
                                 string inputArtista;
                                 cin >> inputArtista;
-                                char accArtista = toupper(inputArtista[0]);
+
+                                for (int i = 0; i < inputArtista.length(); i++) {
+                                    inputArtista[i] = toupper(inputArtista[i]);
+                                }
+
+                                char accArtista = inputArtista[0];
 
                                 int artistaIndice = -1;
                                 if (inputArtista.length() > 1) {
