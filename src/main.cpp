@@ -559,6 +559,7 @@ int main() {
                                 cout << "  V      - Volver al menu principal\n";
                                 cout << "Ingrese Opcion: ";
 
+                                cin.ignore(1000, '\n');
                                 string inputArtista;
                                 cin >> inputArtista;
 
@@ -600,6 +601,7 @@ int main() {
                                         cout << "  X      - Volver al menu principal\n";
                                         cout << "Ingrese Opcion: ";
 
+                                        cin.ignore(1000, '\n');
                                         string subInputCancion;
                                         cin >> subInputCancion;
                                         char accCancion = toupper(subInputCancion[0]);
