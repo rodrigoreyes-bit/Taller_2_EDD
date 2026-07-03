@@ -6,20 +6,18 @@
 #define TALLER1_ESTRUCTURA_ARBOLAVL_HPP
 #include "classes/Cancion.hpp"
 
-class NodoAVL {
-public:
+struct NodoAVL {
     Cancion* cancion;
-    NodoAVL* izq;
-    NodoAVL* der;
+    NodoAVL* izquierdo;
+    NodoAVL* derecho;
     int altura;
 
-    NodoAVL(Cancion* cancion) {
-        this->cancion = cancion;
-        this->izq = nullptr;
-        this->der = nullptr;
-        this->altura = 1;
+    NodoAVL(Cancion* c) {
+        cancion = c;
+        izquierdo = nullptr;
+        derecho = nullptr;
+        altura = 1;
     }
-
 };
 
 class ArbolAVL {
@@ -29,11 +27,12 @@ private:
     int obtenerBalance(NodoAVL* nodo);
     int maximo(int a, int b);
 
-    NodoAVL* rotacionSimpleDerecha(NodoAVL* y);
-    NodoAVL* rotacionSimpleIzquierda(NodoAVL* x);
+    NodoAVL* rotarDerecha(NodoAVL* y);
+    NodoAVL* rotarIzquierda(NodoAVL* x);
 
-    NodoAVL* insertarRec(NodoAVL* nodo, Cancion* cancion);
-    void InOrden(NodoAVL* nodo, int& cont);
+    NodoAVL* insertarRecursivo(NodoAVL* nodo, Cancion* cancion);
+    void mostrarEnOrdenRecursivo(NodoAVL* nodo, int& contador);
+    Cancion* obtenerPorIndiceRecursivo(NodoAVL* nodo, int idx, int& contadorActual);
 
     void destruirArbol(NodoAVL* nodo);
 
@@ -44,8 +43,7 @@ public:
 
     void insertar(Cancion* cancion);
     void mostrarInOrden();
+    Cancion* obtenerPorIndice(int idx);
 };
 
-
-
-#endif //TALLER1_ESTRUCTURA_ARBOLAVL_HPP
+#endif
