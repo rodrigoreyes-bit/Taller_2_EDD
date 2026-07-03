@@ -31,6 +31,8 @@ void Artista::agregarCancion(Cancion* cancion) {
         while (cursor->getSiguienteCancionArtista() != nullptr) cursor = cursor->getSiguienteCancionArtista();
         cursor->setSiguienteCancionArtista(cancion);
     }
+
+    cancionesAVL->insertar(cancion);
 }
 
 bool Artista::quitarCancion(int idCancion) {
@@ -58,4 +60,8 @@ int Artista::contarCanciones() const {
     Cancion* cursor = startCancionesArtista;
     while (cursor != nullptr) { cont++; cursor = cursor->getSiguienteCancionArtista(); }
     return cont;
+}
+
+ArbolAVL* Artista::getCancionesAVL() const {
+    return cancionesAVL;
 }

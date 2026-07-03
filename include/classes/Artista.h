@@ -4,15 +4,18 @@
 
 #include <string>
 #include "../../include/classes/Cancion.hpp"
+#include "data_structures/ArbolAVL.hpp"
 
 using namespace std;
 
 class Artista {
 private:
     string nombre;
-    int contadorCanciones; //contador de cuantas veces se reprodujo esta cancion (para el top 10 canciones más escuchadas)
+    int contadorCanciones;
     Cancion* startCancionesArtista;
     Artista* siguienteArtista;
+
+    ArbolAVL* cancionesAVL;
 
 public:
     Artista(string nombre);
@@ -27,5 +30,7 @@ public:
     void sumarReproduccion(int cantidad = 1);
     int contarCanciones() const;
     void setSiguienteArtista(Artista* siguiente);
+
+    ArbolAVL* getCancionesAVL() const;
 };
 #endif //TALLER1_ESTRUCTURA_ARTISTA_H
