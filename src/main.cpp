@@ -578,7 +578,7 @@ int main() {
                                     volverTop = true; //rgresa al menu app
                                 }
                                 else if (accArtista == 'C') {
-                                    volverArtistas = true; //rompe para que el menú 'T' permita entrar a canciones
+                                    volverArtistas = true;
                                 }
                                 else if (accArtista == 'S' && artistaIndice >= 1 && artistaIndice <= limite) {
                                     Artista* seleccionado = topMostrados[artistaIndice - 1];

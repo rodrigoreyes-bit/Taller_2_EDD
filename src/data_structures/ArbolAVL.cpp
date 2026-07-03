@@ -111,6 +111,15 @@ void ArbolAVL::mostrarEnOrdenRecursivo(NodoAVL* nodo, int& contador) {
     }
 }
 
+void ArbolAVL::mostrarEnOrden() {
+    int contador = 1;
+    if (raiz == nullptr) {
+        std::cout << "  (No hay canciones para este artista)\n";
+        return;
+    }
+    mostrarEnOrdenRecursivo(raiz, contador);
+}
+
 Cancion* ArbolAVL::obtenerPorIndiceRecursivo(NodoAVL* nodo, int idx, int& contadorActual) {
     if (nodo == nullptr) return nullptr;
 

@@ -42,7 +42,7 @@ public:
     ~ArbolAVL();
 
     void insertar(Cancion* cancion);
-    void mostrarInOrden();
+    void mostrarEnOrden();
     Cancion* obtenerPorIndice(int idx);
 };
 
