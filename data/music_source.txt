@@ -18,3 +18,10 @@
 18,Chandelier,Sia,1000 Forms of Fear,2014,218,C:/Musica/Sia/chandelier.mp3
 19,MORE,K/DA,MORE (Single),2020,193,C:/Musica/Kda/more.mp3
 20,Gimme Chocolate!!,BABYMETAL,BABYMETAL,2014,259,C:/Musica/Babymetal/gimme_chocolate.mp3
+21,Bad,Michael Jackson,Bad,1987,247,C:/Musica/MJ/bad.mp3
+22,Little Bad Girl,David Guetta feat. Sia,Nothing but the Beat,2011,191,C:/Musica/David_guetta/little_bad_girl.mp3
+23,She Wolf (Falling to Pieces),David Guetta feat. Sia,Nothing but the Beat,2012,223,C:/Musica/David_guetta/she_wolf.mp3
+24,Elastic Heart,Sia,1000 Forms of Fear,2013,257,C:/Musica/Sia/elastic_heart.mp3
+25,Hello,Adele,25,2015,295,C:/Musica/Adele/hello.mp3
+26,Beat It,Michael Jackson,Thriller,1982,258,C:/Musica/MJ/beat_it.mp3
+27,Unstoppable,Sia,This Is Acting,2016,217,C:/Musica/Sia/unstoppable.mp3
