@@ -1,7 +1,3 @@
-//
-// Created by pc on 01-07-2026.
-//
-
 #include "../../include/data_structures/MaxHeapArtistas.hpp"
 
 #include "classes/Artista.h"

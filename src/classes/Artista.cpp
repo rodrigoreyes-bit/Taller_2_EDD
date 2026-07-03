@@ -5,6 +5,7 @@ Artista::Artista(string nombre) {
     this->contadorCanciones = 0;
     this->startCancionesArtista = nullptr;
     this->siguienteArtista = nullptr;
+    this->cancionesAVL = new ArbolAVL();
 }
 
 string Artista::getNombre() const {
