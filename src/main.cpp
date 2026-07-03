@@ -513,13 +513,13 @@ int main() {
                                     cout << "Opción inválida." << endl;
                                 }
 
-                                // limpieza de memoria dinamica local
                                 delete[] topArray;
                                 delete heapCanciones;
                             }
                         }
                     }
                     else if (cTop == 'A') {
+                        bool volverArtistas = false;
                         int totalArtistas = 0;
                         Artista* artistaActual = listaAlmacenamiento->getPrimerArtista();
 
@@ -530,6 +530,8 @@ int main() {
 
                         if (totalArtistas == 0) {
                             cout << "No hay artistas registrados en el sistema.\n";
+                            //cin.ignore(); cin.get(); //no se si poner esto
+                            volverArtistas = true;
                         } else {
                             MaxHeapArtistas heapArtistas(totalArtistas);
 
@@ -539,56 +541,120 @@ int main() {
                                 artistaActual = artistaActual->getSiguienteArtista();
                             }
 
-                            cout << "   RANKING TOP 10 ARTISTAS MAS ESCUCHADOS\n";
+                            cout << "Ranking TOP 10 Artistas más escuchados:\n";
 
-                            int limite = (heapArtistas.getTamano() < 10) ? heapArtistas.getTamano() : 10;
+                            int limite = (heapArtistas.getTamano() < 10) ? heapArtistas.getTamano() : 10; //CAMBIAR DESPUES :3
 
                             Artista** topMostrados = new Artista*[limite];
 
                             for (int i = 1; i <= limite; i++) {
-                                int reprosSalida = 0;
-                                Artista* topArtista = heapArtistas.extraerMaximo(reprosSalida);
+                                int reproduccionSalida = 0;
+                                Artista* topArtista = heapArtistas.extraerMaximo(reproduccionSalida);
 
                                 if (topArtista != nullptr) {
-                                    cout << "  " << i << ". [" << reprosSalida << " reprod.] " << topArtista->getNombre() << "\n";
-                                    topMostrados[i - 1] = topArtista; // Guardamos la referencia
+                                    cout << "  " << i << ". [" << reproduccionSalida << " reprod.] " << topArtista->getNombre() << "\n";
+                                    topMostrados[i - 1] = topArtista;
                                 }
                             }
-                            cout << "=========================================\n\n";
+                            cout << "\nOpciones:\n";
+                                cout << "  S<num> - Mostrar canciones del artista (ej: S1)\n";
+                                cout << "  C      - Top 10 canciones más escuchadas\n";
+                                cout << "  V      - Volver al menú principal\n";
+                                cout << "Ingrese Opción: ";
 
-                            cout << "¿Deseas seleccionar un artista para ver sus canciones alfabéticamente? (S/N): ";
-                            char respuesta;
-                            cin >> respuesta;
+                                string inputArtista;
+                                cin >> inputArtista;
+                                char accArtista = toupper(inputArtista[0]);
 
-                            if (respuesta == 'S' || respuesta == 's') {
-                                cout << "Ingresa el número del artista (1 al " << limite << "): ";
-                                int num;
-                                cin >> num;
+                                int artistaIndice = -1;
+                                if (inputArtista.length() > 1) {
+                                    try {
+                                        artistaIndice = stoi(inputArtista.substr(1));
+                                    } catch (...) { artistaIndice = -1; }
+                                }
 
-                                if (num >= 1 && num <= limite) {
-                                    Artista* seleccionado = topMostrados[num - 1];
-                                    cout << "\n-----------------------------------------\n";
-                                    cout << " Canciones de: " << seleccionado->getNombre() << " (Orden A-Z):\n";
-                                    cout << "-----------------------------------------\n";
+                                if (accArtista == 'V') {
+                                    volverArtistas = true;
+                                    volverTop = true; //rgresa al menu app
+                                }
+                                else if (accArtista == 'C') {
+                                    volverArtistas = true; //rompe para que el menú 'T' permita entrar a canciones
+                                }
+                                else if (accArtista == 'S' && artistaIndice >= 1 && artistaIndice <= limite) {
+                                    Artista* seleccionado = topMostrados[artistaIndice - 1];
+                                    bool volverSubCanciones = false;
 
-                                    // LLAMADA AL INORDEN DEL AVL PRIVADO DEL ARTISTA
-                                    seleccionado->getCancionesAVL()->mostrarEnOrden();
+                                    while (!volverSubCanciones) {
+                                        clearScreen();
+                                        cout << "Ranking TOP 10 Artistas más escuchados:\n";
+                                        cout << "Artista: " << seleccionado->getNombre() << "\n\n";
 
-                                    cout << "-----------------------------------------\n\n";
+                                        seleccionado->getCancionesAVL()->mostrarEnOrden();
+
+                                        cout << "\nOpciones:\n";
+                                        cout << "  R<num> - Reproducir canción seleccionada\n";
+                                        cout << "  A<num> - Agregar canción seleccionada al final de la lista\n";
+                                        cout << "  V      - Volver al listado de TOP 10 artistas\n";
+                                        cout << "  X      - Volver al menú principal\n";
+                                        cout << "Ingrese Opción: ";
+
+                                        string subInputCancion;
+                                        cin >> subInputCancion;
+                                        char accCancion = toupper(subInputCancion[0]);
+
+                                        int idxCancion = -1;
+                                        if (subInputCancion.length() > 1) {
+                                            try {
+                                                idxCancion = stoi(subInputCancion.substr(1));
+                                            } catch (...) { idxCancion = -1; }
+                                        }
+
+                                        if (accCancion == 'V') {
+                                            volverSubCanciones = true; //regresa a la lista de artistas
+                                        }
+                                        else if (accCancion == 'X') {
+                                            volverSubCanciones = true;
+                                            volverArtistas = true;
+                                            volverTop = true; //regresa al menú principal del sistema
+                                        }
+                                        else if (accCancion == 'R' && idxCancion >= 1) {
+                                            Cancion* elegida = seleccionado->getCancionesAVL()->obtenerPorIndice(idxCancion);
+                                            if (elegida != nullptr) {
+                                                lista->reproducirAltiro(elegida, config1, listaAlmacenamiento);
+                                                cancionActual = elegida->getNombre();
+                                                artistaActual = elegida->getArtista();
+                                                albumActual = elegida->getAlbum();
+                                                anioActual = elegida->getAnio();
+
+                                                volverSubCanciones = true;
+                                                volverArtistas = true;
+                                                volverTop = true;
+                                            } else {
+                                                cout << "Índice de canción no válido.\n";
+                                                system("pause");
+                                            }
+                                        }
+                                        else if (accCancion == 'A' && idxCancion >= 1) {
+                                            Cancion* elegida = seleccionado->getCancionesAVL()->obtenerPorIndice(idxCancion);
+                                            if (elegida != nullptr) {
+                                                lista->agregarAlFinal(elegida);
+                                                cout << "Canción \"" << elegida->getNombre() << "\" añadida a la cola.\n";
+                                                system("pause");
+                                            } else {
+                                                cout << "Índice de canción no válido.\n";
+                                                system("pause");
+                                            }
+                                        }
+                                    }
                                 } else {
-                                    cout << "Número inválido.\n\n";
+                                    cout << "Opción o índice inválido.\n";
+                                    system("pause");
                                 }
+
+                                delete[] topMostrados;
                             }
-
-                            delete[] topMostrados;
                         }
-                    }//fjfjf
-
-
-
-
                     }
-                }
                 break;
             }
 
