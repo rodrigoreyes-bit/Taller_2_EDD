@@ -543,7 +543,12 @@ int main() {
 
                             cout << "Ranking TOP 10 Artistas más escuchados:\n";
 
-                            int limite = (heapArtistas.getTamano() < 10) ? heapArtistas.getTamano() : 10; //CAMBIAR DESPUES :3
+                            int limite;
+                            if (heapArtistas.getTamano() < 10) {
+                                limite = heapArtistas.getTamano();
+                            } else {
+                                limite = 10;
+                            }
 
                             Artista** topMostrados = new Artista*[limite];
 
@@ -575,10 +580,10 @@ int main() {
 
                                 if (accArtista == 'V') {
                                     volverArtistas = true;
-                                    volverTop = true; //rgresa al menu app
+                                    volverTop = true;
                                 }
                                 else if (accArtista == 'C') {
-                                    volverArtistas = true; //rompe para que el menú 'T' permita entrar a canciones
+                                    volverArtistas = true; 
                                 }
                                 else if (accArtista == 'S' && artistaIndice >= 1 && artistaIndice <= limite) {
                                     Artista* seleccionado = topMostrados[artistaIndice - 1];
@@ -610,12 +615,12 @@ int main() {
                                         }
 
                                         if (accCancion == 'V') {
-                                            volverSubCanciones = true; //regresa a la lista de artistas
+                                            volverSubCanciones = true;
                                         }
                                         else if (accCancion == 'X') {
                                             volverSubCanciones = true;
                                             volverArtistas = true;
-                                            volverTop = true; //regresa al menú principal del sistema
+                                            volverTop = true;
                                         }
                                         else if (accCancion == 'R' && idxCancion >= 1) {
                                             Cancion* elegida = seleccionado->getCancionesAVL()->obtenerPorIndice(idxCancion);
