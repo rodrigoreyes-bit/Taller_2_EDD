@@ -371,7 +371,7 @@ int main() {
 
                 while (!volverA) {
                     lista->mostrarListaReproduccion();
-                    cout << "Ingrese Opción: ";
+                    cout << "Ingrese Opcion: ";
                     cin >> subInput;
 
                     if (toupper(subInput[0]) == 'V') {
@@ -384,7 +384,7 @@ int main() {
 
                             volverA = true;
                         } catch (...) {
-                            cout << "Formato inválido (Ejemplo: S2)" << endl;
+                            cout << "Formato invalido (Ejemplo: S2)" << endl;
                         }
                     }
                 }
@@ -407,10 +407,10 @@ int main() {
                 bool volverTop = false;
                 while (!volverTop) {
                     cout << "Ranking TOP" << endl;
-                    cout << "C - Top 10 canciones más escuchadas" << endl;
-                    cout << "A - Top 10 artistas más escuchados" << endl;
+                    cout << "C - Top 10 canciones mas escuchadas" << endl;
+                    cout << "A - Top 10 artistas mas escuchados" << endl;
                     cout << "X - Salir" << endl;
-                    cout << "Ingrese Opción: ";
+                    cout << "Ingrese Opcion: ";
                     string entradita;
                     cin >> entradita;
                     char cTop = toupper(entradita[0]);
@@ -424,7 +424,6 @@ int main() {
                             clearScreen();
                             cout << "Ranking TOP 10 Canciones más escuchadas:" << endl;
 
-                            //1) contar cuántas canciones existen en total en el almacenamiento
                             int totalCanciones = 0;
                             Nodo* cursorContar = listaAlmacenamiento->getPrimerNodo();
                             while (cursorContar != nullptr) {
@@ -435,17 +434,14 @@ int main() {
                             if (totalCanciones == 0) {
                                 cout << "No hay canciones registradas en la biblioteca." << endl;
                             } else {
-                                // 2) instanciar el maxheap con la capacidad total calculada
                                 MaxHeapCancion* heapCanciones = new MaxHeapCancion(totalCanciones);
 
-                                // 3) insertar todas las canciones de la biblioteca en el Heap
                                 Nodo* cursorLlenar = listaAlmacenamiento->getPrimerNodo();
                                 while (cursorLlenar != nullptr) {
                                     heapCanciones->insertar(cursorLlenar->dato, cursorLlenar->dato->getReproducciones());
                                     cursorLlenar = cursorLlenar->siguiente;
                                 }
 
-                                // 4) det cuantas mostrar (N = un máximo de 10)
                                 int canttt;
                                 if (totalCanciones < 10) {
                                     canttt = totalCanciones;
@@ -453,10 +449,8 @@ int main() {
                                     canttt = 10;
                                 }
 
-                                // Arreglo dinámico auxiliar para guardar las top canciones en orden y permitir R<num> o A<num>
                                 Cancion** topArray = new Cancion*[canttt];
 
-                                // 5) extraer ordenadamente del heap y mostrar en pantalla
                                 for (int i = 0; i < canttt; i++) {
                                     int reps = 0;
                                     Cancion* topC = heapCanciones->extraerMaximo(reps);
@@ -486,10 +480,9 @@ int main() {
 
                                 if (accion == 'V') {
                                     volverCanciones = true;
-                                    volverTop = true; // Regresa al menú principal del reproductor
+                                    volverTop = true;
                                 }
                                 else if (accion == 'A' && indice == -1) {
-                                    // Cambiar directamente al Top 10 de artistas (rompe este ciclo para ir al menú TOP)
                                     volverCanciones = true;
                                 }
                                 else if (accion == 'R' && indice >= 1 && indice <= canttt) {
@@ -510,7 +503,7 @@ int main() {
                                     lista->agregarAlFinal(elegida);
                                     cout << "Cancion agregada: " << elegida->getNombre() << endl;
                                 } else {
-                                    cout << "Opción inválida." << endl;
+                                    cout << "Opcion invalida." << endl;
                                 }
 
                                 delete[] topArray;
@@ -541,7 +534,7 @@ int main() {
                                 artistaActual = artistaActual->getSiguienteArtista();
                             }
 
-                            cout << "Ranking TOP 10 Artistas más escuchados:\n";
+                            cout << "Ranking TOP 10 Artistas mas escuchados:\n";
 
                             int limite;
                             if (heapArtistas.getTamano() < 10) {
@@ -557,15 +550,15 @@ int main() {
                                 Artista* topArtista = heapArtistas.extraerMaximo(reproduccionSalida);
 
                                 if (topArtista != nullptr) {
-                                    cout << "  " << i << ". [" << reproduccionSalida << " reprod.] " << topArtista->getNombre() << "\n";
+                                    cout << "  " << i << ". [" << reproduccionSalida << "] " << topArtista->getNombre() << "\n";
                                     topMostrados[i - 1] = topArtista;
                                 }
                             }
                             cout << "\nOpciones:\n";
                                 cout << "  S<num> - Mostrar canciones del artista (ej: S1)\n";
-                                cout << "  C      - Top 10 canciones más escuchadas\n";
-                                cout << "  V      - Volver al menú principal\n";
-                                cout << "Ingrese Opción: ";
+                                cout << "  C      - Top 10 canciones mas escuchadas\n";
+                                cout << "  V      - Volver al menu principal\n";
+                                cout << "Ingrese Opcion: ";
 
                                 string inputArtista;
                                 cin >> inputArtista;
@@ -591,17 +584,17 @@ int main() {
 
                                     while (!volverSubCanciones) {
                                         clearScreen();
-                                        cout << "Ranking TOP 10 Artistas más escuchados:\n";
+                                        cout << "Ranking TOP 10 Artistas mas escuchados:\n";
                                         cout << "Artista: " << seleccionado->getNombre() << "\n\n";
 
                                         seleccionado->getCancionesAVL()->mostrarEnOrden();
 
                                         cout << "\nOpciones:\n";
-                                        cout << "  R<num> - Reproducir canción seleccionada\n";
-                                        cout << "  A<num> - Agregar canción seleccionada al final de la lista\n";
+                                        cout << "  R<num> - Reproducir cancion seleccionada\n";
+                                        cout << "  A<num> - Agregar cancion seleccionada al final de la lista\n";
                                         cout << "  V      - Volver al listado de TOP 10 artistas\n";
-                                        cout << "  X      - Volver al menú principal\n";
-                                        cout << "Ingrese Opción: ";
+                                        cout << "  X      - Volver al menu principal\n";
+                                        cout << "Ingrese Opcion: ";
 
                                         string subInputCancion;
                                         cin >> subInputCancion;
@@ -642,7 +635,7 @@ int main() {
                                                 volverArtistas = true;
                                                 volverTop = true;
                                             } else {
-                                                cout << "Índice de canción no válido.\n";
+                                                cout << "Índice de cancion no válido.\n";
                                                 system("pause");
                                             }
                                         }
@@ -650,19 +643,18 @@ int main() {
                                             Cancion* elegida = seleccionado->getCancionesAVL()->obtenerPorIndice(idxCancion);
                                             if (elegida != nullptr) {
                                                 lista->agregarAlFinal(elegida);
-                                                cout << "Canción \"" << elegida->getNombre() << "\" añadida a la cola.\n";
+                                                cout << "Cancion \"" << elegida->getNombre() << "\" añadida a la cola.\n";
                                                 system("pause");
                                             } else {
-                                                cout << "Índice de canción no válido.\n";
+                                                cout << "Indice de canción no valido.\n";
                                                 system("pause");
                                             }
                                         }
                                     }
                                 } else {
-                                    cout << "Opción o índice inválido.\n";
+                                    cout << "Opción o índice invalido.\n";
                                     system("pause");
                                 }
-
                                 delete[] topMostrados;
                             }
                         }
