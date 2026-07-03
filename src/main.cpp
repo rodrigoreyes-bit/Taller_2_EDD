@@ -578,7 +578,7 @@ int main() {
                                     volverTop = true; //rgresa al menu app
                                 }
                                 else if (accArtista == 'C') {
-                                    volverArtistas = true;
+                                    volverArtistas = true; //rompe para que el menú 'T' permita entrar a canciones
                                 }
                                 else if (accArtista == 'S' && artistaIndice >= 1 && artistaIndice <= limite) {
                                     Artista* seleccionado = topMostrados[artistaIndice - 1];
@@ -622,9 +622,16 @@ int main() {
                                             if (elegida != nullptr) {
                                                 lista->reproducirAltiro(elegida, config1, listaAlmacenamiento);
                                                 cancionActual = elegida->getNombre();
-                                                artistaActual = elegida->getArtista();
                                                 albumActual = elegida->getAlbum();
                                                 anioActual = elegida->getAnio();
+
+                                                artistaActual = nullptr;
+
+                                                for (Artista* curr = listaAlmacenamiento->getPrimerArtista(); curr != nullptr; curr = curr->getSiguienteArtista()) {
+                                                    if (curr->getNombre() == elegida->getArtista()) {
+                                                        artistaActual = curr;
+                                                        break;
+                                                    }
 
                                                 volverSubCanciones = true;
                                                 volverArtistas = true;
