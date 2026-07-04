@@ -559,7 +559,6 @@ int main() {
 
                 while (!volverTop) {
                     if (estadoTop == 'M') {
-                        clearScreen();
                         cout << "Ranking TOP" << endl;
                         cout << "C - Top 10 canciones mas escuchadas" << endl;
                         cout << "A - Top 10 artistas mas escuchados" << endl;
@@ -574,7 +573,6 @@ int main() {
                         }
                     }
                     else if (estadoTop == 'C') {
-                        clearScreen();
                         cout << "Ranking TOP 10 Canciones mas escuchadas:" << endl;
 
                         int totalCanciones = 0;
