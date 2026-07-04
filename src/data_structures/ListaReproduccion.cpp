@@ -43,8 +43,10 @@ void ListaReproduccion::pistaSiguiente(Configuracion *c, Almacenamiento *alm) {
                     alm->registrarReproduccion(actual->dato);
                 }
             }
-        } else {
+        } else if (c->getRandom()) {
             generarListaAleatoria(alm, c);
+        } else {
+            c->setPausa(true);
         }
     }
 }
@@ -311,43 +313,4 @@ void ListaReproduccion::reproducirCancionMezclar(Cancion* cancion, Configuracion
     c->setPausa(false);
     c->setIdCancionActual(actual->dato->getId());
     alm->registrarReproduccion(actual->dato);
-
-    int cantCanciones = 0;
-    Nodo* canciones = alm->getPrimerNodo();
-    while (canciones != nullptr) {
-        if (canciones->dato->getId() != cancion->getId()) cantCanciones++;
-        canciones = canciones->siguiente;
-    }
-
-    if (cantCanciones == 0) return;
-
-    int* listaMezcla = new int[cantCanciones];
-    int idxM = 0;
-    canciones = alm->getPrimerNodo();
-    while (canciones != nullptr) {
-        if (canciones->dato->getId() != cancion->getId()) {
-            listaMezcla[idxM++] = canciones->dato->getId();
-        }
-        canciones = canciones->siguiente;
-    }
-
-    for (int i = cantCanciones - 1; i > 0; i--) {
-        int j = rand() % (i + 1);
-        int tempId = listaMezcla[i];
-        listaMezcla[i] = listaMezcla[j];
-        listaMezcla[j] = tempId;
-    }
-
-    for (int i = 0; i < cantCanciones; i++) {
-        Nodo* buscador = alm->getPrimerNodo();
-        while (buscador != nullptr) {
-            if (buscador->dato->getId() == listaMezcla[i]) {
-                agregarAlFinal(buscador->dato);
-                break;
-            }
-            buscador = buscador->siguiente;
-        }
-    }
-
-    delete[] listaMezcla;
 }

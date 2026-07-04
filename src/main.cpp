@@ -185,10 +185,9 @@ void ejecutarmenuF(Almacenamiento* alm, Configuracion* c, ListaReproduccion* lr)
     bool volverPrincipal = false;
 
     while (!volverPrincipal) {
-        clearScreen();
         cout << "Busqueda de canciones" << endl << endl;
         cout << "Buscar canciones que contengan: ";
-        cin.ignore();
+        cin.ignore(1000, '\n');
         string texto;
         getline(cin, texto);
 
@@ -239,9 +238,15 @@ void ejecutarmenuF(Almacenamiento* alm, Configuracion* c, ListaReproduccion* lr)
         }
 
         bool repetirBusqueda = false;
+        string mensajeEstado = "";
+
         while (!repetirBusqueda && !volverPrincipal) {
-            clearScreen();
             cout << "Busqueda de canciones" << endl << endl;
+
+            if (!mensajeEstado.empty()) {
+                cout << ">> " << mensajeEstado << endl << endl;
+            }
+
             cout << "Canciones que contienen \"" << texto << "\":" << endl;
             for (int i = 0; i < total; i++) {
                 cout << " " << (i + 1) << ". " << resultados[i]->getNombre()
@@ -263,7 +268,7 @@ void ejecutarmenuF(Almacenamiento* alm, Configuracion* c, ListaReproduccion* lr)
                 try {
                     num = stoi(subInput.substr(1));
                 } catch (...) {
-                    cout << "Formato no valido (ej: R1, A2)." << endl;
+                    mensajeEstado = "Formato no valido (ej: R1, A2).";
                     continue;
                 }
             }
@@ -275,20 +280,13 @@ void ejecutarmenuF(Almacenamiento* alm, Configuracion* c, ListaReproduccion* lr)
             } else if (subOp == 'R' && num >= 1 && num <= total) {
                 Cancion* elegida = resultados[num - 1];
                 lr->reproducirCancionMezclar(elegida, c, alm);
-                cout << "Reproduciendo ahora: " << elegida->getNombre() << endl;
-                cout << "Presione Enter para continuar...";
-                cin.ignore();
-                cin.get();
+                mensajeEstado = "Reproduciendo ahora: " + elegida->getNombre();
             } else if (subOp == 'A' && num >= 1 && num <= total) {
                 Cancion* elegida = resultados[num - 1];
                 lr->agregarAlFinal(elegida);
-                cout << "Cancion agregada a la lista de reproduccion actual: "
-                     << elegida->getNombre() << endl;
-                cout << "Presione Enter para continuar...";
-                cin.ignore();
-                cin.get();
+                mensajeEstado = "Cancion agregada a la lista de reproduccion actual: " + elegida->getNombre();
             } else {
-                cout << "Opcion no valida o indice fuera de rango." << endl;
+                mensajeEstado = "Opcion no valida o indice fuera de rango.";
             }
         }
 
@@ -421,7 +419,6 @@ int main() {
                     else if (cTop == 'C') {
                         bool volverCanciones = false;
                         while (!volverCanciones) {
-                            clearScreen();
                             cout << "Ranking TOP 10 Canciones mas escuchadas:" << endl;
 
                             int totalCanciones = 0;
