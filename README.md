@@ -27,6 +27,7 @@ Como este taller es la continuación del anterior, al hacer una copia del repo a
 
 * **Nota IMPORTANTE:** Si se compila en CLion o VSCode, el programa requiere que la carpeta data/ esté presente en el mismo **Working Directory** para cargar correctamente `music_source.txt` y `status.cfg`.
 Para cambiar el **Working Directory** en CLion se tiene que:
+
 1.- Ir a *Run*, click derecho y clickear *Edit Configurations..*.
 2.- Seleccionar *Working Directory*.
 3.- Hacer click en el icono de la carpeta y seleccionar la *carpeta* raíz del proyecto *"Taller1_Estructura"*.
