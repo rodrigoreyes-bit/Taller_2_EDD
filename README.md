@@ -35,14 +35,14 @@ Para cambiar el **Working Directory** en CLion se tiene que:
 ## Compilación y Ejecución desde la Consola
 Para compilar y ejecutar este proyecto de forma manual sin depender de un IDE, asegúrese de abrir su terminal o consola de comandos en la **carpeta raíz del proyecto** (donde se ubica el archivo `main.cpp`).
 
-### 1. Comando de Compilación
+#### Comando de Compilación
 Ejecute el siguiente comando utilizando el compilador `g++` para compilar todos los módulos del programa:
 
 **En Windows:**
 ```bash
 g++ -std=c++14 src/main.cpp src/data_structures/ListaReproduccion.cpp src/data_structures/Nodo.cpp src/data_structures/MaxHeapCancion.cpp src/data_structures/MaxHeapArtistas.cpp src/data_structures/ArbolAVL.cpp src/classes/Almacenamiento.cpp src/classes/Cancion.cpp src/classes/Configuracion.cpp src/classes/Artista.cpp -o Snoopify.exe
 ```
-Para ejecutarlo:
+#### Comando de ejecución:
 ```
 Snoopify.exe
 ```
