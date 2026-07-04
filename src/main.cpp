@@ -665,13 +665,12 @@ int main() {
                 break;
             }
 
-        default:
-        cout << "Opcion no valida. Intente de nuevo." << endl;
-        break;
+            default:
+                cout << "Opcion no valida. Intente de nuevo." << endl;
+                break;
         }
     }
     delete listaAlmacenamiento;
     delete lista;
     return 0;
-
 }
