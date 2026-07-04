@@ -289,7 +289,6 @@ void ejecutarmenuF(Almacenamiento* alm, Configuracion* c, ListaReproduccion* lr)
                 mensajeEstado = "Opcion no valida o indice fuera de rango.";
             }
         }
-
         delete[] resultados;
     }
 }
@@ -491,7 +490,6 @@ int main() {
                                     albumActual = elegida->getAlbum();
                                     anioActual = elegida->getAnio();
 
-                                    cout << "Reproduciendo ahora: " << cancionActual << endl;
                                     volverCanciones = true;
                                     volverTop = true;
                                 }
@@ -638,7 +636,7 @@ int main() {
                                                 volverArtistas = true;
                                                 volverTop = true;
                                             } else {
-                                                cout << "Índice de cancion no válido.\n";
+                                                cout << "Indice de cancion no valido.\n";
                                                 system("pause");
                                             }
                                         }
