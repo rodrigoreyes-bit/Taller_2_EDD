@@ -554,8 +554,7 @@ int main() {
                 ejecutarmenuF(listaAlmacenamiento, config1, lista);
                 break;
 
-            case 'T':
-                {
+            case 'T': {
                 bool volverTop = false;
                 while (!volverTop) {
                     cout << "Ranking TOP" << endl;
@@ -664,16 +663,17 @@ int main() {
                     }
                     else if (cTop == 'A') {
                         mostrarTop10Artistas(listaAlmacenamiento, volverTop, lista, config1, anioActual, albumActual, cancionActual);
+                        break;
                     }
-                break;
+                }
             }
-
             default:
-                cout << "Opcion no valida. Intente de nuevo." << endl;
-                break;
+            cout << "Opcion no valida. Intente de nuevo." << endl;
+            break;
+
         }
+        delete listaAlmacenamiento;
+        delete lista;
+        return 0;
     }
-    delete listaAlmacenamiento;
-    delete lista;
-    return 0;
 }
